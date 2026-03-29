@@ -3,12 +3,14 @@ services:
     build:
       context: .
       args:
-        ANYTYPE_CLI_VERSION: v0.1.8
+        ANYTYPE_CLI_VERSION: v0.1.9
     ports:
-      - "31012:31012"
-      - "31010:31010"
-      - "31011:31011"
+      - "31012:31012" # HTTP API
+      - "31010:31010" # gRPC
+      - "31011:31011" # gRPC-Web
     volumes:
       - ./data:/data
+      - ./anytype-home:/root/.anytype
+      - ../client-config.yml:/root/.config/anytype/network.yml:ro
     command: ["serve", "--listen-address", "0.0.0.0:31012"]
     restart: unless-stopped
